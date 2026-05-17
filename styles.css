@@ -736,6 +736,11 @@ section {
   margin-top: var(--space-8);
 }
 
+.how-grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: var(--space-6);
+}
+
 .how-step {
   position: relative;
 }
