@@ -1,325 +1,253 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LoadLink — Téléchargez n'importe quelle vidéo, n'importe où</title>
-  <meta name="description" content="LoadLink est un outil desktop pour télécharger des vidéos et de l'audio depuis YouTube, Vimeo, TikTok, Instagram et 1800+ autres sites. Gratuit, sans publicité, sans inscription.">
-  <meta name="theme-color" content="#0A0A0B">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LoadLink — En refonte</title>
+  <meta name="description" content="LoadLink prépare sa prochaine version. Outil technique de gestion média local pour créateurs, journalistes et archivistes." />
+  <meta name="theme-color" content="#0A0A0B" />
 
-  <!-- Favicons -->
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <meta property="og:title" content="LoadLink — En refonte" />
+  <meta property="og:description" content="LoadLink prépare sa prochaine version. Outil technique de gestion média local." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://loadlink.fr/" />
+  <meta property="og:locale" content="fr_FR" />
 
-  <!-- Open Graph (Facebook, Discord, WhatsApp, iMessage, Slack, LinkedIn) -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://loadlink.fr/">
-  <meta property="og:title" content="LoadLink — Téléchargez n'importe quelle vidéo">
-  <meta property="og:description" content="Outil desktop pour télécharger vidéos et audio depuis YouTube, Vimeo, TikTok et 1800+ autres sites. Gratuit, sans publicité, sans inscription.">
-  <meta property="og:image" content="https://loadlink.fr/og-image.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:locale" content="fr_FR">
-  <meta property="og:site_name" content="LoadLink">
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="LoadLink — Téléchargez n'importe quelle vidéo">
-  <meta name="twitter:description" content="Outil desktop pour télécharger vidéos et audio depuis YouTube, Vimeo, TikTok et 1800+ autres sites.">
-  <meta name="twitter:image" content="https://loadlink.fr/og-image.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-  <!-- Fonts: Geist (display + body) for crisp tech feel -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0A0A0B;
+      --fg: #FAFAFA;
+      --muted: #6B6B70;
+      --border: rgba(255, 255, 255, 0.08);
+      --accent: #E8390C;
+    }
 
-  <link rel="stylesheet" href="styles.css">
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      z-index: 1;
+    }
+
+    header {
+      padding: 32px 48px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--fg);
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .container {
+      max-width: 560px;
+      width: 100%;
+      text-align: left;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    h1 {
+      font-size: clamp(36px, 6vw, 56px);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 24px;
+    }
+
+    h1 .accent {
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    p {
+      font-size: 17px;
+      line-height: 1.6;
+      color: var(--muted);
+      max-width: 480px;
+      margin-bottom: 20px;
+    }
+
+    p strong {
+      color: var(--fg);
+      font-weight: 500;
+    }
+
+    .divider {
+      width: 40px;
+      height: 1px;
+      background: var(--border);
+      margin: 40px 0;
+    }
+
+    .meta {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .meta a {
+      color: var(--fg);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      transition: border-color 0.2s;
+    }
+
+    .meta a:hover {
+      border-bottom-color: var(--accent);
+    }
+
+    footer {
+      padding: 32px 48px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--muted);
+      position: relative;
+      z-index: 2;
+    }
+
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover {
+      color: var(--fg);
+    }
+
+    @media (max-width: 640px) {
+      header, footer { padding: 24px; }
+      main { padding: 24px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    .container > * {
+      opacity: 0;
+      animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+    }
+    .container > *:nth-child(1) { animation-delay: 0.1s; }
+    .container > *:nth-child(2) { animation-delay: 0.2s; }
+    .container > *:nth-child(3) { animation-delay: 0.3s; }
+    .container > *:nth-child(4) { animation-delay: 0.4s; }
+    .container > *:nth-child(5) { animation-delay: 0.5s; }
+    .container > *:nth-child(6) { animation-delay: 0.6s; }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
-
-  <!-- Subtle ambient gradient bg -->
-  <div class="ambient-bg"></div>
-
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="#" class="logo">
-        <svg class="logo-mark" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-          <polyline points="7 10 12 15 17 10"/>
-          <line x1="12" y1="15" x2="12" y2="3"/>
-        </svg>
-        <span class="logo-text">LoadLink</span>
-      </a>
-      <nav class="nav">
-        <a href="#features" class="nav-link">Fonctions</a>
-        <a href="#sites" class="nav-link">Sites supportés</a>
-        <a href="#download" class="nav-cta">Télécharger</a>
-      </nav>
-    </div>
+  <header>
+    <div class="logo">LoadLink</div>
   </header>
 
   <main>
-
-    <!-- HERO -->
-    <section class="hero">
-      <div class="container">
-        <div class="hero-badge">
-          <span class="hero-badge-dot"></span>
-          <span>Version 1.0 disponible · Windows</span>
-        </div>
-
-        <h1 class="hero-title">
-          Télécharge des vidéos<br>
-          <span class="hero-title-accent">depuis n'importe où.</span>
-        </h1>
-
-        <p class="hero-subtitle">
-          Outil desktop pour télécharger vidéos et audio depuis<br>
-          <strong>1800+ sites</strong>, et compresser tes fichiers en <strong>ZIP ou H.265</strong>.
-        </p>
-
-        <div class="hero-actions">
-          <a href="#download" class="btn-primary">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="7 10 12 15 17 10"/>
-              <line x1="12" y1="15" x2="12" y2="3"/>
-            </svg>
-            Télécharger pour Windows
-          </a>
-          <a href="#features" class="btn-secondary">Voir les fonctions →</a>
-        </div>
-
-        <div class="hero-meta">
-          <span>Gratuit</span>
-          <span class="dot">·</span>
-          <span>Sans publicité</span>
-          <span class="dot">·</span>
-          <span>Sans inscription</span>
-          <span class="dot">·</span>
-          <span>~100 Mo</span>
-        </div>
+    <div class="container">
+      <div class="status">
+        <span class="status-dot"></span>
+        <span>En refonte</span>
       </div>
 
-      <!-- App screenshot mockup -->
-      <div class="hero-mockup container">
-        <div class="mockup-frame">
-          <div class="mockup-bar">
-            <div class="mockup-dot red"></div>
-            <div class="mockup-dot yellow"></div>
-            <div class="mockup-dot green"></div>
-            <div class="mockup-title">LoadLink</div>
-          </div>
-          <div class="mockup-content">
-            <div class="mockup-row">
-              <h3 style="margin:0;font-size:18px;font-weight:600">LoadLink</h3>
-              <div class="mockup-icon"></div>
-            </div>
-            <div class="mockup-tabs">
-              <div class="mockup-tab selected">Télécharger</div>
-              <div class="mockup-tab">Compresser</div>
-            </div>
-            <div class="mockup-card">
-              <div class="mockup-label">LIEN VIDÉO</div>
-              <div class="mockup-input">https://www.youtube.com/watch?v=...</div>
-            </div>
-            <div class="mockup-formats">
-              <div class="mockup-format selected">
-                <div class="mockup-format-icon">▶</div>
-                <div>Vidéo</div>
-                <div class="mockup-format-meta">MP4 1080p</div>
-              </div>
-              <div class="mockup-format">
-                <div class="mockup-format-icon">♪</div>
-                <div>Audio</div>
-                <div class="mockup-format-meta">MP3 320k</div>
-              </div>
-            </div>
-            <div class="mockup-btn">↓ Télécharger</div>
-          </div>
-        </div>
-      </div>
-    </section>
+      <h1>
+        Une nouvelle version,<br/>
+        <span class="accent">bientôt.</span>
+      </h1>
 
-    <!-- FEATURES -->
-    <section class="features" id="features">
-      <div class="container">
-        <div class="section-label">FONCTIONS</div>
-        <h2 class="section-title">Tout ce qu'il te faut, rien en trop.</h2>
+      <p>
+        LoadLink est en cours de refonte complète pour devenir un outil technique
+        de gestion média local destiné aux <strong>créateurs, journalistes et archivistes</strong>.
+      </p>
 
-        <div class="features-grid">
-          <div class="feature">
-            <div class="feature-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            </div>
-            <h3 class="feature-title">Téléchargement direct</h3>
-            <p class="feature-desc">Colle un lien, choisis le format, c'est parti. Vidéo et audio, jusqu'à 4K.</p>
-          </div>
+      <p>
+        Sauvegarde de contenus dont vous détenez les droits, exercice du droit
+        à la portabilité (art. 20 RGPD), archivage de sources libres.
+      </p>
 
-          <div class="feature">
-            <div class="feature-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="10 8 16 12 10 16 10 8"/><circle cx="12" cy="12" r="10"/></svg>
-            </div>
-            <h3 class="feature-title">8 formats au choix</h3>
-            <p class="feature-desc">MP4, WEBM pour la vidéo. MP3, WAV, FLAC, M4A, OGG, AAC pour l'audio.</p>
-          </div>
+      <div class="divider"></div>
 
-          <div class="feature">
-            <div class="feature-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-            </div>
-            <h3 class="feature-title">Playlists complètes</h3>
-            <p class="feature-desc">Récupère une playlist entière en un clic, numérotée automatiquement.</p>
-          </div>
-
-          <div class="feature">
-            <div class="feature-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
-            </div>
-            <h3 class="feature-title">Compression intégrée</h3>
-            <p class="feature-desc">Archive en ZIP ou réencode en H.265 pour gagner jusqu'à 70% de taille.</p>
-          </div>
-
-          <div class="feature">
-            <div class="feature-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-            </div>
-            <h3 class="feature-title">Aucune publicité</h3>
-            <p class="feature-desc">Pas de pub intrusive, pas de tracker, pas d'inscription. Juste l'outil.</p>
-          </div>
-
-          <div class="feature">
-            <div class="feature-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
-            <h3 class="feature-title">Hors-ligne après install</h3>
-            <p class="feature-desc">Logiciel desktop natif. Tout est local sur ton PC, rien ne passe par nos serveurs.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SITES SUPPORTÉS -->
-    <section class="sites" id="sites">
-      <div class="container">
-        <div class="section-label">COMPATIBILITÉ</div>
-        <h2 class="section-title">Plus de 1800 sites supportés.</h2>
-        <p class="section-subtitle">Voilà les plus populaires. <a href="https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md" target="_blank" rel="noopener">Liste complète →</a></p>
-
-        <div class="sites-grid">
-          <div class="site-card">YouTube</div>
-          <div class="site-card">Vimeo</div>
-          <div class="site-card">TikTok</div>
-          <div class="site-card">Instagram</div>
-          <div class="site-card">Twitter / X</div>
-          <div class="site-card">Facebook</div>
-          <div class="site-card">Twitch</div>
-          <div class="site-card">SoundCloud</div>
-          <div class="site-card">Dailymotion</div>
-          <div class="site-card">Reddit</div>
-          <div class="site-card">LinkedIn</div>
-          <div class="site-card">Bandcamp</div>
-          <div class="site-card">Mixcloud</div>
-          <div class="site-card">Arte</div>
-          <div class="site-card">France TV</div>
-          <div class="site-card">Radio France</div>
-          <div class="site-card">9GAG</div>
-          <div class="site-card">Streamable</div>
-          <div class="site-card">Odysee</div>
-          <div class="site-card">+1800</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- DOWNLOAD CTA -->
-    <section class="download-cta" id="download">
-      <div class="container">
-        <div class="download-card">
-          <div class="download-icon">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="7 10 12 15 17 10"/>
-              <line x1="12" y1="15" x2="12" y2="3"/>
-            </svg>
-          </div>
-          <h2 class="download-title">Prêt à essayer ?</h2>
-          <p class="download-subtitle">Téléchargement gratuit. Aucune inscription. Installation en 30 secondes.</p>
-
-          <a href="https://github.com/studiobastidecontact-tech/loadlink/releases/latest/download/LoadLink-Setup.exe" class="btn-primary btn-large">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="7 10 12 15 17 10"/>
-              <line x1="12" y1="15" x2="12" y2="3"/>
-            </svg>
-            Télécharger pour Windows
-          </a>
-
-          <div class="download-info">
-            <span>Version 1.0 · Windows 10 / 11 · ~100 Mo</span>
-          </div>
-
-          <div class="download-mac-note">
-            <span>Version Mac à venir.</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- TWO MODES -->
-    <section class="how">
-      <div class="container">
-        <div class="section-label">DEUX MODES</div>
-        <h2 class="section-title">Télécharger ou compresser.</h2>
-
-        <div class="how-grid how-grid-2">
-          <div class="how-step">
-            <div class="how-num">01 — TÉLÉCHARGER</div>
-            <h3 class="how-title">Colle un lien, choisis le format</h3>
-            <p class="how-desc">YouTube, Vimeo, TikTok, peu importe. Vidéo MP4/WEBM ou audio MP3/WAV/FLAC/M4A/OGG/AAC, jusqu'à 4K. Le fichier arrive dans <code>Vidéos/LoadLink-Videos</code> ou <code>Musique/LoadLink-Audio</code>.</p>
-          </div>
-          <div class="how-step">
-            <div class="how-num">02 — COMPRESSER</div>
-            <h3 class="how-title">Réduis tes vidéos et dossiers</h3>
-            <p class="how-desc">Archive un dossier entier en <strong>ZIP</strong>, ou réencode des vidéos en <strong>H.265</strong> pour gagner jusqu'à 70% de taille sans perte visible. Pratique pour libérer de l'espace ou envoyer des fichiers.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div class="footer-brand">
-        <div class="logo">
-          <svg class="logo-mark" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-          <span class="logo-text">LoadLink</span>
-        </div>
-        <p class="footer-tagline">Outil desktop pour télécharger n'importe quelle vidéo.</p>
-      </div>
-
-      <div class="footer-links">
-        <a href="#features">Fonctions</a>
-        <a href="#sites">Sites supportés</a>
-        <a href="#download">Télécharger</a>
-        <a href="legal.html">Mentions légales</a>
-      </div>
-
-      <div class="footer-bottom">
-        <span>© 2026 LoadLink</span>
-        <span class="dot">·</span>
-        <a href="legal.html">Mentions légales</a>
+      <div class="meta">
+        Contact : <a href="mailto:contact@loadlink.fr">contact@loadlink.fr</a>
       </div>
     </div>
-  </footer>
+  </main>
 
-  <script src="main.js"></script>
+  <footer>
+    <span>© 2026 LoadLink</span>
+    <a href="/legal.html">Mentions légales</a>
+  </footer>
 </body>
 </html>
